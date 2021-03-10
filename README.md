@@ -1,5 +1,13 @@
 ## Summary
 
+We want to:
+
+- "Hello world" web app -> contenerize in Docker image & push to a Repository
+- Create K8s cluster
+- Deploy image from container repo to our k8s cluster
+
+Then automate with proper CI/CD so that upon a change in the app code and commit to GitHub, changes (new image) are deployed automatically to our Kubernetes cluster.
+
 ## 1. Containerize the app using Docker
 
 See the `Dockerfile` for the different application examples. 
