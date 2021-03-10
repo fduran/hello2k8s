@@ -192,12 +192,12 @@ Our service is exposed now via the NodePort:
 Hello, me!%
 ```
 
-## 3. Automate the deployment of the API
+## 3. Automate the deployment of the App
 
 The objective of a good deployment pipeline is that upon a developer merging (or even doing a PR) on GitHub, this will trigger the build and tagging of a new Docker image, this being pushed to a repository from which the k8s cluster can pull from (in our case, Google Container Registry unless we want to use a public one like Docker Hub) and finally, perform an update of the image.  
 
-The best way to do this is with one CI/CD tool like Jenkins etc. In our case, to stay within GitHub, I would use GitHub Actions, which would look basically like this [Google Workflow](https://github.com/actions/starter-workflows/blob/main/ci/google.yml)
+The best way to do this is with one CI/CD tool like Jenkins etc. One example such tool is GitHub Actions, with a configuration that would look basically like this [Google Workflow](https://github.com/actions/starter-workflows/blob/main/ci/google.yml)
 
 
-For time's sake, I've quickly created a [deploy.sh](./deploy.sh) script that will deploy the latest master commit to the existing k8s cluster.
+I've also created a [deploy.sh](./deploy.sh) script that will deploy the latest master commit to the existing k8s cluster.
 
