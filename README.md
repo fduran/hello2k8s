@@ -4,11 +4,11 @@
 
 See the `Dockerfile` for the different application examples. 
 
-To build this image, from the repo root dir do:  `docker build -t hellogo .`  
+To build this image, from the repo root dir do:  `docker build -t hello .`  
 
 This image is not tagged (default tag will be ":latest"). As for the tag naming convention, we can look into using [Semantic Versioning](https://semver.org/) and potentially also use the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) strategy as a "shift left" opportunity to empower developers to control what's deployed or how (for ex, we could automatically deploy a new test environment upon major and major commits but not on patches).
 
-To instantiate a container from this image we can do: `docker run -p 8080:8080 -d --name hello hellogo` 
+To instantiate a container from this image we can do: `docker run -p 8080:8080 -d --name hello hello` 
 
 We can test this is working with for example: 
 
@@ -27,7 +27,7 @@ Keep-Alive: timeout=5
 Hello, pepe!%
 ```
 
-To push to an ccount to Docker Hub, we only need to authenticate and push, for ex:  
+To push to an account in Docker Hub, we only need to authenticate and push, for ex:  
 
 ```
 docker login
@@ -35,26 +35,22 @@ docker push fduran/hello
 ```
 
 
-### GKE Cloud Build
+### GCP Cloud Build
 
 
-To build, from the directory containing the Dockerfile:
+To build using Google Cloud's "Cloud Build", from the directory containing the Dockerfile:
 
-```
-gcloud builds submit --tag gcr.io/hellok8s-307200/hellok8s
-Creating temporary tarball archive of 6 file(s) totalling 5.8 MiB before compression.
-...
-ID                                    CREATE_TIME                DURATION  SOURCE                                                                                         IMAGES                                     STATUS
-3a99f90e-8f4d-49e5-8b1a-7e57ea731016  2021-03-10T01:16:00+00:00  30S       gs://hellok8s-307200_cloudbuild/source/1615338956.877657-e4feabc2eb7a4bdea870dd9ccb2ffa85.tgz  gcr.io/hellok8s-307200/hellok8s (+1 more)  SUCCESS
-```
+
+`gcloud builds submit --tag gcr.io/$PROJECT_ID/hello`
 
 or, to also push the built image to the Container Registry:
+
 `gcloud builds submit --config cloudbuild.yaml .`
 
 ## 2. Deploy the app to the cloud with Kubernetes
 
 
-### 2.1 Kubernetes on GKE, using SDK
+### 2.1 Kubernetes cluster on GKE
 
 To use GGP and GKE we have some prerequisites:
 
@@ -87,10 +83,10 @@ REGION=us-central1
 # set default project to work with
 gcloud config set project $PROJECT_ID 
 
-# check available versions
+# check available versions if you want to pin it
 gcloud container get-server-config --region $REGION
 
-# create k8s cluster
+# create k8s cluster (--num-nodes is initial node number, minimum is 3)
 gcloud container clusters create \
   --num-nodes 1 \
   --region $REGION \
@@ -136,7 +132,7 @@ For **Terraform** Infrastructure as Code, as requirement:
 Terraform v0.14.5
 ```
 
-I created the resources in a separate directory, see Terraform's [README.md](./terraform/README.md)
+I created the resources in a separate directory, see Terraform's [README.md](./clouds/GCP/terraform/README.md)
 
 ### 2.2 Deploy Kubernetes Workload
 
@@ -164,7 +160,7 @@ Type:                     NodePort
 NodePort:                 <unset>  30253/TCP
 ```
 
-Now we need to open this port in the nodes themselves (we can see here why we don't want to do this in a non-PoC environment):
+Now we need to open this port in our CGP project (we can see here why we don't want to do this in a non-PoC environment):
 
 ```
 % gcloud compute firewall-rules create test-node-port --allow tcp:30253
