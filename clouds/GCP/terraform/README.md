@@ -35,19 +35,19 @@ google_container_cluster.primary: Creating...
 google_container_cluster.primary: Still creating... [10s elapsed]
 ...
 google_container_cluster.primary: Still creating... [3m20s elapsed]
-google_container_cluster.primary: Creation complete after 3m21s [id=projects/hellok8s-307200/locations/us-east1/clusters/hellok8s-307200-gke]
+google_container_cluster.primary: Creation complete after 3m21s [id=projects/hellok8s-307200/locations/us-east1/clusters/hello-gke]
 
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
 Outputs:
 
 cluster_host = "34.75.41.52"
-cluster_name = "hellok-gke"
+cluster_name = "hello-gke"
 
 # check cluster
 gcloud container clusters list
-NAME               LOCATION  MASTER_VERSION    MASTER_IP    MACHINE_TYPE  NODE_VERSION      NUM_NODES  STATUS
-hellok8s-307200-gke  us-east1  1.17.14-gke.1600  34.75.41.52  e2-medium     1.17.14-gke.1600  3          RUNNING
+NAME       LOCATION  MASTER_VERSION    MASTER_IP    MACHINE_TYPE  NODE_VERSION      NUM_NODES  STATUS
+hello-gke  us-east1  1.17.14-gke.1600  34.75.41.52  e2-medium     1.17.14-gke.1600  3          RUNNING
 
 # get credentials
 gcloud container clusters get-credentials hello-gke --region us-east1
