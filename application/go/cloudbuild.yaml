@@ -7,6 +7,6 @@ steps:
             'build',
             '-t', 'gcr.io/$PROJECT_ID/hello:latest',
             '--cache-from', 'gcr.io/$PROJECT_ID/hello:latest',
-            'application/go/Dockerfile'
+            'application/go'
         ]
 images: ['gcr.io/$PROJECT_ID/hello:latest']
