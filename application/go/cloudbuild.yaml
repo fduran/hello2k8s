@@ -6,14 +6,20 @@ steps:
   args: [
             'build',
             '-t', 'gcr.io/$PROJECT_ID/hello:latest',
-            '--cache-from', 'gcr.io/$PROJECT_ID/hello:latest',
+            '--cache-from', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA',
             'application/go'
+        ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+            'tag',
+            'gcr.io/$PROJECT_ID/hello:$SHORT_SHA',
+            'gcr.io/$PROJECT_ID/hello:latest'
         ]
 - name: "gcr.io/cloud-builders/gke-deploy"
   args:
   - run
   - --filename=kubernetes/hello.yaml
-  - --image=gcr.io/$PROJECT_ID/hello:latest
+  - --image=gcr.io/$PROJECT_ID/hello:$SHORT_SHA
   - --location=us-east1
   - --cluster=hello-gke
-images: ['gcr.io/$PROJECT_ID/hello:latest']
+images: ['gcr.io/$PROJECT_ID/hello:$SHORT_SHA']
