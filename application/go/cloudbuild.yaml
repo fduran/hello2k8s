@@ -1,14 +1,4 @@
 steps:
-# use builder phase (golang image) for caching
-- name: 'gcr.io/cloud-builders/docker'
-  args: [
-            'build',
-            '-t', 'gcr.io/$PROJECT_ID/hello:builder',
-            '--target', 'builder',
-            '--cache-from', 'gcr.io/$PROJECT_ID/hello:builder',
-            'application/go'
-        ]
-
 # build and tag with short SHA
 - name: 'gcr.io/cloud-builders/docker'
   args: [
@@ -21,20 +11,17 @@ steps:
 
 # Push image to GCR
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/hello:builder']
-
-- name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA']
 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/hello:latest']
 
 # Deploy new image to GKE (will override image name:tag in k8s manifest)
-- name: 'gcr.io/cloud-builders/gke-deploy'
-  args:
-  - run
-  - --filename=kubernetes/hello.yaml
-  - --image=gcr.io/$PROJECT_ID/hello:$SHORT_SHA
-  - --location=us-east1
-  - --cluster=hello-gke
+# - name: 'gcr.io/cloud-builders/gke-deploy'
+#   args:
+#   - run
+#   - --filename=kubernetes/hello.yaml
+#   - --image=gcr.io/$PROJECT_ID/hello:$SHORT_SHA
+#   - --location=us-east1
+#   - --cluster=hello-gke
 
