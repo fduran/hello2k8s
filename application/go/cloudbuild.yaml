@@ -9,7 +9,7 @@ steps:
             'application/go'
         ]
 
-  # build and tag with short SHA
+# build and tag with short SHA
 - name: 'gcr.io/cloud-builders/docker'
   args: [
             'build',
