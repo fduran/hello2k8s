@@ -13,6 +13,7 @@ steps:
   args:
   - run
   - --filename=kubernetes/hello.yaml
+  - --filename=gcr.io/$PROJECT_ID/hello:latest
   - --location=us-east1
   - --cluster=hello-gke
 images: ['gcr.io/$PROJECT_ID/hello:latest']
