@@ -9,4 +9,10 @@ steps:
             '--cache-from', 'gcr.io/$PROJECT_ID/hello:latest',
             'application/go'
         ]
+- name: "gcr.io/cloud-builders/gke-deploy"
+  args:
+  - run
+  - --filename=kubernetes/hello.yaml
+  - --location=us-east1
+  - --cluster=hello-gke
 images: ['gcr.io/$PROJECT_ID/hello:latest']

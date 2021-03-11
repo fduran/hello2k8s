@@ -206,3 +206,10 @@ The best way to do this is with one CI/CD tool like Jenkins etc. One example suc
 
 I've also created a [deploy.sh](./deploy.sh) script that will deploy the latest master commit to the existing k8s cluster.
 
+### CI/CD with GCP Cloud Build
+
+- Manually [connect your repository to Cloud Build](https://cloud.google.com/build/docs/quickstart-automate#connect_your_repository)
+- Manually [create a Cloud Build trigger]() 
+  - Event: Push to a Branch
+  - Source: your repo and your branch (^$master or ^$main for ex)
+  - Build Configuration: Cloud Build configuraiton file (yaml)
