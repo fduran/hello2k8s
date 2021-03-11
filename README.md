@@ -48,6 +48,7 @@ docker push fduran/hello
 
 To build using Google Cloud's "Cloud Build", from the directory containing the Dockerfile:
 
+`PROJECT_ID=$(gcloud config get-value project)`
 
 `gcloud builds submit --tag gcr.io/$PROJECT_ID/hello`
 

@@ -37,3 +37,5 @@ docker push $REPO
 # to pull latest image with same tag we need: imagePullPolicy: Always
 kubectl delete deployment hello-deployment
 kubectl apply -f manifests/hello.yaml
+
+# kubectl set image deployment/hello-deployment hello=hello # container=image
