@@ -1,25 +1,40 @@
 steps:
+# pull :latest image for caching
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
   args: ['-c', 'docker pull gcr.io/$PROJECT_ID/hello:latest || exit 0']
+
+  # build and tag with short SHA
 - name: 'gcr.io/cloud-builders/docker'
   args: [
             'build',
-            '-t', 'gcr.io/$PROJECT_ID/hello:latest',
-            '--cache-from', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA',
+            '-t', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA',
+            '--cache-from', 'gcr.io/$PROJECT_ID/hello:latest',
             'application/go'
         ]
+
+# Push image to GCR
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA']
+
+# Tag as :latest as well for next build caching
 - name: 'gcr.io/cloud-builders/docker'
   args: [
             'tag',
             'gcr.io/$PROJECT_ID/hello:$SHORT_SHA',
             'gcr.io/$PROJECT_ID/hello:latest'
         ]
-- name: "gcr.io/cloud-builders/gke-deploy"
+
+# Push also to GCR
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/hello:latest']
+
+# Deploy new image to GKE (will override image name:tag in k8s manifest)
+- name: 'gcr.io/cloud-builders/gke-deploy'
   args:
   - run
   - --filename=kubernetes/hello.yaml
   - --image=gcr.io/$PROJECT_ID/hello:$SHORT_SHA
   - --location=us-east1
   - --cluster=hello-gke
-images: ['gcr.io/$PROJECT_ID/hello:$SHORT_SHA']
+
