@@ -1,5 +1,5 @@
 steps:
-# pull :latest image for caching
+# use builder phase (golang image) for caching
 - name: 'gcr.io/cloud-builders/docker'
   args: [
             'build',
@@ -20,6 +20,9 @@ steps:
         ]
 
 # Push image to GCR
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/hello:builder']
+
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA']
 
