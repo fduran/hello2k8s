@@ -1,15 +1,21 @@
 steps:
 # pull :latest image for caching
 - name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args: ['-c', 'docker pull gcr.io/$PROJECT_ID/hello:latest || exit 0']
+  args: [
+            'build',
+            '-t', 'gcr.io/$PROJECT_ID/hello:builder',
+            '--target', 'builder',
+            '--cache-from', 'gcr.io/$PROJECT_ID/hello:builder',
+            'application/go'
+        ]
 
   # build and tag with short SHA
 - name: 'gcr.io/cloud-builders/docker'
   args: [
             'build',
             '-t', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA',
-            '--cache-from', 'gcr.io/$PROJECT_ID/hello:latest',
+            '-t', 'gcr.io/$PROJECT_ID/hello:latest',
+            '--cache-from', 'gcr.io/$PROJECT_ID/hello:builder',
             'application/go'
         ]
 
@@ -17,15 +23,6 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA']
 
-# Tag as :latest as well for next build caching
-- name: 'gcr.io/cloud-builders/docker'
-  args: [
-            'tag',
-            'gcr.io/$PROJECT_ID/hello:$SHORT_SHA',
-            'gcr.io/$PROJECT_ID/hello:latest'
-        ]
-
-# Push also to GCR
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/hello:latest']
 
