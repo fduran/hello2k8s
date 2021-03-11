@@ -24,4 +24,3 @@ steps:
 #   - --image=gcr.io/$PROJECT_ID/hello:$SHORT_SHA
 #   - --location=us-east1
 #   - --cluster=hello-gke
-
