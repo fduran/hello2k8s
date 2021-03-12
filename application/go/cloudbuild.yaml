@@ -1,8 +1,4 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args: ['-c', 'docker pull gcr.io/$PROJECT_ID/hello:builder']
-
 # build and tag with short SHA
 - name: 'gcr.io/cloud-builders/docker'
   args: [
