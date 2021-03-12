@@ -1,14 +1,10 @@
 steps:
 # build and tag with short SHA
 - name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args: ['-c', 'docker pull gcr.io/$PROJECT_ID/golang:alpine3.12']
-- name: 'gcr.io/cloud-builders/docker'
   args: [
             'build',
             '-t', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA',
             '-t', 'gcr.io/$PROJECT_ID/hello:latest',
-            '--cache-from', 'gcr.io/$PROJECT_ID/golang:alpine3.12',
             'application/go'
         ]
 
