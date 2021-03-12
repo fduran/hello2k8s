@@ -4,8 +4,8 @@
 # This is based on Debian and sets the GOPATH to /go.
 # https://hub.docker.com/_/golang
 
-ARG REPO=gcr.io/hellok8s-307200
-FROM ${REPO}/golang:alpine3.12 as builder
+ARG REPO=gcr.io/hellok8s-307200/
+FROM ${REPO}golang:alpine3.12 as builder
 
 ENV GO111MODULE=on \
     CGO_ENABLED=0 \
