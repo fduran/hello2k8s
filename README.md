@@ -213,3 +213,15 @@ I've also created a [deploy.sh](./deploy.sh) script that will deploy the latest 
   - Event: Push to a Branch
   - Source: your repo and your branch (^$master or ^$main for ex)
   - Build Configuration: Cloud Build configuraiton file (yaml)
+
+Using the [cloudbuild.yaml](application/go/cloudbuild.yaml) (example using Go image) definition with Cloud Build's GKE builder we can deploy changes to the app directly from a commit.
+
+## TODO
+
+- SemVer / Conventional Commits
+- LaunchDarkly
+- Notify to Slack
+- Release branches
+- Prom/Grafana etc
+- Tests
+- Spinnaker

@@ -1,0 +1,19 @@
+
+# test Dockerfile
+ARG REPO=gcr.io/hellok8s-307200/
+FROM ${REPO}golang:alpine3.12 as builder
+
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64
+
+# Create and change to the app directory.
+WORKDIR /app
+
+COPY go.* .
+
+# Copy local code to the container image.
+COPY . .
+
+ENTRYPOINT ["go", "test"]
