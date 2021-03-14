@@ -13,7 +13,7 @@ steps:
   args: [
             'build',
             '-t', 'gcr.io/$PROJECT_ID/hello_test:$SHORT_SHA',
-            '-f', 'Dockerfiletest',
+            '-f', 'application/go/Dockerfiletest',
             'application/go'
         ]
 
