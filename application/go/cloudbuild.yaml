@@ -18,7 +18,6 @@ steps:
         ]
 
 # run test
-# build test image
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
   args: ['-c', 'docker run gcr.io/$PROJECT_ID/hello_test:$SHORT_SHA || exit 1']

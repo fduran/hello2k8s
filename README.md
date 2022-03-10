@@ -218,10 +218,4 @@ Using the [cloudbuild.yaml](application/go/cloudbuild.yaml) (example using Go im
 
 ## TODO
 
-- SemVer / Conventional Commits
-- LaunchDarkly
-- Notify to Slack
-- Release branches
 - Prom/Grafana etc
-- Tests
-- Spinnaker
