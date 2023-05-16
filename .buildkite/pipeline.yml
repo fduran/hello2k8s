@@ -1,0 +1,3 @@
+steps:
+  - label: ":docker: Build"
+    command: "docker build -t hello2k8s application/go/Dockerfile"
